@@ -1,11 +1,11 @@
 FROM microsoft/windowsservercore
 RUN powershell -Version 1.0 -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
-SHELL ["powershell", "-NoProfile -InputFormat None -Command"]
+SHELL ["powershell", "-Command"]
 RUN choco install git 7zip cmake wget -y; `
     choco install visualcpp-build-tools `
         --version 15.0.26228.20170424 -y; `
     Write-Host 'Waiting for Visual C++ Build Tools to finish'; `
-Wait-Process -Name vs_installer
+    Wait-Process -Name vs_installer
 
 WORKDIR C:\
 RUN wget https://www.sfml-dev.org/files/SFML-2.5.0-windows-vc15-64-bit.zip
